@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System.IO;
 using AForge.Imaging;
+using AForge.Imaging.Filters;
 
 namespace ImageOpener
 {
@@ -122,20 +123,49 @@ namespace ImageOpener
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            HoughCircle[] circles = ImageProcessor.ImageProcessor.ApplyHoughCircle((BitmapImage)imgPhoto.Source);
-            foreach (HoughCircle circle in circles)
+            int radius = Convert.ToInt32(slider.Value);
+            int tresh = Convert.ToInt32(sliderTresh.Value);
+            HoughCircleTransformation circles = ImageProcessor.ImageProcessor.ApplyHoughCircle((BitmapImage)imgPhoto.Source, radius, tresh);
+            double houghWidthFactor = imgPhoto.ActualHeight/ imgPhoto.Source.Height;
+            double houghHeightFactor = imgPhoto.ActualWidth/ imgPhoto.Source.Width;
+            /*
+            foreach (HoughCircle circle in circles.OrderBy(circle => circle.Intensity).Take(1000))
             {
                 Ellipse ellipse = new Ellipse();
                 ellipse.Fill = System.Windows.Media.Brushes.Blue;
-                ellipse.Width = 2;
-                ellipse.Height = 2;
+                ellipse.Width = 10;
+                ellipse.Height = 10;
                 ellipse.StrokeThickness = 2;
+                ellipse.SetValue(Canvas.LeftProperty, (double)circle.X*houghWidthFactor);
+                ellipse.SetValue(Canvas.TopProperty, (double)circle.Y*houghHeightFactor);
 
-                Cnv.Children.Add(ellipse);
+                CnvHugh.Children.Add(ellipse);
+            }*/
+            //CnvHugh.Background = new ImageBrush(imgPhoto.Source);
+            MemoryStream ms = new MemoryStream();
+            circles.ToBitmap().Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            ms.Position = 0;
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = ms;
+            bi.EndInit();
+            imgPhotoHugh.Source = bi;
+        }
 
-                Canvas.SetLeft(ellipse, circle.X);
-                Canvas.SetTop(ellipse, circle.Y);
-            }
+        private void buttonTresh_Click(object sender, RoutedEventArgs e)
+        {
+            int tresh = Convert.ToInt32(sliderTresh.Value);
+            Bitmap tresholdedPicture = ImageProcessor.ImageProcessor.ApplyFilter((BitmapImage)imgPhoto.Source, new Threshold(tresh));
+
+            MemoryStream ms = new MemoryStream();
+            tresholdedPicture.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            ms.Position = 0;
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = ms;
+            bi.EndInit();
+
+            imgPhotoHugh.Source = bi;
         }
     }
 }

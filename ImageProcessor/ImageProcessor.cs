@@ -65,8 +65,8 @@ namespace ImageProcessor
 
         public static Bitmap FilterImage(BitmapImage bitmapImage)
         {
-            /*Bitmap image = BitmapImage2Bitmap(bitmapImage);
-            var filter = new FiltersSequence(new IFilter[]
+            Bitmap image = BitmapImage2Bitmap(bitmapImage);
+            /*var filter = new FiltersSequence(new IFilter[]
            {
                 Grayscale.CommonAlgorithms.BT709,
                 new Threshold(0x20)
@@ -81,23 +81,35 @@ namespace ImageProcessor
             return filter.Apply(image);
         }
 
-        public static HoughCircle[] ApplyHoughCircle(BitmapImage source)
+        public static HoughCircleTransformation ApplyHoughCircle(BitmapImage source, int radius, int tresh)
         {
             Bitmap image = BitmapImage2Bitmap(source);
             var filter = new FiltersSequence(new IFilter[]
             {
                 Grayscale.CommonAlgorithms.BT709,
-                new Threshold(0x40)
+                new Threshold(tresh)
             });
             var binaryImage = filter.Apply(image);
-            HoughCircleTransformation circleTransform = new HoughCircleTransformation(35);
+            HoughCircleTransformation circleTransform = new HoughCircleTransformation(radius);
             // apply Hough circle transform
             circleTransform.ProcessImage(binaryImage);
             Bitmap houghCirlceImage = circleTransform.ToBitmap();
             // get circles using relative intensity
             HoughCircle[] circles = circleTransform.GetCirclesByRelativeIntensity(0.5);
 
-            return circles;
+            return circleTransform;
+        }
+
+        public static Bitmap ApplyFilter(BitmapImage source, IFilter filter)
+        {
+            var filters = new FiltersSequence(new IFilter[] {
+                Grayscale.CommonAlgorithms.BT709,
+                filter
+            });
+            Bitmap image = BitmapImage2Bitmap(source);
+            var binaryImage = filters.Apply(image);
+
+            return binaryImage;
         }
     }
 }

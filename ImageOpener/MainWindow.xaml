@@ -5,23 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageOpener"
         mc:Ignorable="d"
-        Title="MainWindow" Height="324" Width="343">
+        Title="MainWindow" Height="960" Width="1200">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="349*" />
+                <ColumnDefinition Width="349*" />
                 <ColumnDefinition Width="30*" />
             </Grid.ColumnDefinitions>
-            <Image Margin="12,12,16,71" Name="imgPhoto" 
-        Stretch="Fill" Grid.Column="1" MouseDown="imgPhoto_MouseDown" />
+            <Image Margin="12,12,16,71" Name="imgPhoto" Stretch="Fill" Grid.Column="1"  />
             <Canvas Margin="12,12,16,71" Grid.Column="1" x:Name="Cnv"/>
-            <Button Height="23" HorizontalAlignment="Left" 
-        Margin="12,0,0,34" Name="btnLoad" VerticalAlignment="Bottom" 
-        Width="75" Grid.Column="1" Click="btnLoad_Click">_Load</Button>
-            <Button x:Name="button" Content="Get circles" Grid.Column="1" HorizontalAlignment="Left" Margin="105,239,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-            <Button x:Name="button_Copy" Content="Filter image" Grid.Column="1" HorizontalAlignment="Left" Margin="195,238,0,0" VerticalAlignment="Top" Width="75" Click="buttoFiltern_Click"/>
-            <Button x:Name="button1" Content="Hughes" Grid.Column="1" HorizontalAlignment="Left" Margin="105,264,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
+            <Image Margin="12,12,16,71" Name="imgPhotoHugh" Stretch="Fill" Grid.Column="2" />
+            <Canvas Margin="12,12,16,71" Grid.Column="2" x:Name="CnvHugh">
+                <Button Height="23" x:Name="button1" Content="Hughes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button1_Click" Canvas.Left="-1" Canvas.Top="855"/>
+            </Canvas>
+            <Button Height="23" HorizontalAlignment="Left" Margin="12,0,0,34" Name="btnLoad" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Click="btnLoad_Click">_Load</Button>
+            <Button Height="23" x:Name="button" Content="Get circles" Grid.Column="1" HorizontalAlignment="Left" Margin="96,873,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+            <Button Height="23" x:Name="button_Copy" Content="Filter image" Grid.Column="1" HorizontalAlignment="Left" Margin="186,872,0,0" VerticalAlignment="Top" Width="75" Click="buttoFiltern_Click"/>
+            <Slider x:Name="slider" Grid.Column="2" HorizontalAlignment="Left" Margin="108,872,0,0" VerticalAlignment="Top" Width="191" Value="30" Minimum="0" Maximum="50" TickFrequency="5"/>
+            <Button Height="23" x:Name="buttonTresh" Content="Find treshold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="12,896,0,0" Click="buttonTresh_Click"/>
+            <Slider x:Name="sliderTresh" Grid.Column="2" HorizontalAlignment="Left" Margin="108,901,0,0" VerticalAlignment="Top" Width="191" Minimum="0" Maximum="100" TickFrequency="5"/>
         </Grid>
     </Grid>
 </Window>
