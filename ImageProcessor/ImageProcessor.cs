@@ -63,6 +63,23 @@ namespace ImageProcessor
             return blobs;
         }
 
+        public static Bitmap FilterImage(BitmapImage bitmapImage, double sliderValueLow, double slideValueHigh)
+        {
+            Bitmap image = BitmapImage2Bitmap(bitmapImage);
+            /*var filter = new FiltersSequence(new IFilter[]
+           {
+                Grayscale.CommonAlgorithms.BT709,
+                new Threshold(0x20)
+           });
+            var binaryImage = filter.Apply(image);*/
+            ColorFiltering filter = new ColorFiltering();
+            // set color ranges to keep
+            filter.Red = new IntRange((int)sliderValueLow, (int)slideValueHigh);
+            filter.Green = new IntRange(0, 120);
+            filter.Blue = new IntRange(0, 120);
+
+            return filter.Apply(image);
+        }
         public static Bitmap FilterImage(BitmapImage bitmapImage)
         {
             Bitmap image = BitmapImage2Bitmap(bitmapImage);
@@ -98,6 +115,22 @@ namespace ImageProcessor
             HoughCircle[] circles = circleTransform.GetCirclesByRelativeIntensity(0.5);
 
             return circleTransform;
+        }
+
+        public static Bitmap HSL(BitmapImage source)
+        {
+            Bitmap image = BitmapImage2Bitmap(source);
+
+            HSLFiltering filter = new HSLFiltering();
+            // set color ranges to keep
+            /*filter.Hue = new IntRange(335, 0);
+            filter.Saturation = new Range(0.6f, 1);
+            filter.Luminance = new Range(0.1f, 1);*/
+            filter.Hue = new IntRange(340, 1);
+            filter.UpdateLuminance = false;
+            filter.UpdateHue = false;
+
+            return filter.Apply(image);
         }
 
         public static Bitmap ApplyFilter(BitmapImage source, IFilter filter)

@@ -42,6 +42,8 @@ namespace ImageOpener
             {
                 imgPhoto.Source = new BitmapImage(new Uri(op.FileName));
             }
+            button2.IsEnabled = true;
+            button_Copy.IsEnabled = true;
         }
 
         private void imgPhoto_MouseDown(object sender, MouseButtonEventArgs e)
@@ -109,6 +111,7 @@ namespace ImageOpener
 
         private void buttoFiltern_Click(object sender, RoutedEventArgs e)
         {
+            /*
             Bitmap bitmap = ImageProcessor.ImageProcessor.FilterImage((BitmapImage)imgPhoto.Source);
             MemoryStream ms = new MemoryStream();
             bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
@@ -117,8 +120,18 @@ namespace ImageOpener
             bi.BeginInit();
             bi.StreamSource = ms;
             bi.EndInit();
-
-            imgPhoto.Source = bi;
+            */
+            Bitmap bitmap = ImageProcessor.ImageProcessor.HSL((BitmapImage)imgPhoto.Source);
+            MemoryStream ms = new MemoryStream();
+            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            ms.Position = 0;
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = ms;
+            bi.EndInit();
+            imgPhotoHugh.Source = bi;// imgPhoto.Source;
+            sliderFilterLow.IsEnabled = true;
+            sliderFilterHigh.IsEnabled = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -166,6 +179,34 @@ namespace ImageOpener
             bi.EndInit();
 
             imgPhotoHugh.Source = bi;
+        }
+
+        private void sliderTresh_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            Slider slider = sender as Slider;
+            double low = sliderFilterLow.Value;
+            double high = sliderFilterHigh.Value;
+            if(low > high)
+            {
+                high = low + 1;
+                sliderFilterHigh.Value = high;
+            }
+            Bitmap bitmap = ImageProcessor.ImageProcessor.FilterImage((BitmapImage)imgPhoto.Source, low, high);
+            MemoryStream ms = new MemoryStream();
+            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+            ms.Position = 0;
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = ms;
+            bi.EndInit();
+
+            imgPhotoHugh.Source = bi;
+            sliderFilterLow.IsEnabled = true;
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            imgPhoto.Source = imgPhotoHugh.Source;
         }
     }
 }

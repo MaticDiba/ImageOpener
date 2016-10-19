@@ -7,25 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="960" Width="1200">
     <Grid>
-        <Grid>
+        <Grid Margin="0,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30*" />
                 <ColumnDefinition Width="349*" />
                 <ColumnDefinition Width="349*" />
                 <ColumnDefinition Width="30*" />
             </Grid.ColumnDefinitions>
-            <Image Margin="12,12,16,71" Name="imgPhoto" Stretch="Fill" Grid.Column="1"  />
-            <Canvas Margin="12,12,16,71" Grid.Column="1" x:Name="Cnv"/>
-            <Image Margin="12,12,16,71" Name="imgPhotoHugh" Stretch="Fill" Grid.Column="2" />
-            <Canvas Margin="12,12,16,71" Grid.Column="2" x:Name="CnvHugh">
-                <Button Height="23" x:Name="button1" Content="Hughes" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="button1_Click" Canvas.Left="-1" Canvas.Top="855"/>
+            <Image Margin="12,12,16,103" Name="imgPhoto" Stretch="Fill" Grid.Column="1"  />
+            <Canvas Margin="18,10,10,103" Grid.Column="1" x:Name="Cnv"/>
+            <Image Margin="12,12,16,103" Name="imgPhotoHugh" Stretch="Fill" Grid.Column="2" />
+            <Canvas Margin="12,12,16,101" Grid.Column="2" x:Name="CnvHugh">
+
             </Canvas>
-            <Button Height="23" HorizontalAlignment="Left" Margin="12,0,0,34" Name="btnLoad" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Click="btnLoad_Click">_Load</Button>
-            <Button Height="23" x:Name="button" Content="Get circles" Grid.Column="1" HorizontalAlignment="Left" Margin="96,873,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-            <Button Height="23" x:Name="button_Copy" Content="Filter image" Grid.Column="1" HorizontalAlignment="Left" Margin="186,872,0,0" VerticalAlignment="Top" Width="75" Click="buttoFiltern_Click"/>
-            <Slider x:Name="slider" Grid.Column="2" HorizontalAlignment="Left" Margin="108,872,0,0" VerticalAlignment="Top" Width="191" Value="30" Minimum="0" Maximum="50" TickFrequency="5"/>
-            <Button Height="23" x:Name="buttonTresh" Content="Find treshold" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="2" Margin="12,896,0,0" Click="buttonTresh_Click"/>
-            <Slider x:Name="sliderTresh" Grid.Column="2" HorizontalAlignment="Left" Margin="108,901,0,0" VerticalAlignment="Top" Width="191" Minimum="0" Maximum="100" TickFrequency="5"/>
+            <Button Height="23" x:Name="button1" Content="Hughes" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Click="button1_Click" Canvas.Left="-1" Canvas.Top="855" Grid.Column="2" Margin="12,0,0,43" IsEnabled="False"/>
+            <Button Height="23" HorizontalAlignment="Left" Name="btnLoad"                               Grid.Column="1" Margin="18,0,0,71"      VerticalAlignment="Bottom"  Width="75" Click="btnLoad_Click">_Load</Button>
+            <Button Height="23" HorizontalAlignment="Left" Name="button"      Content="Get circles"     Grid.Column="1" Margin="102,0,0,71"    VerticalAlignment="Bottom"  Width="75" Click="button_Click" IsEnabled="False"/>
+            <Button Height="23" HorizontalAlignment="Left" Name="button_Copy" Content="Filter image"    Grid.Column="2" Margin="12,0,0,71"     VerticalAlignment="Bottom"  Width="75" Click="buttoFiltern_Click" IsEnabled="False"/>
+            <Button Height="23" HorizontalAlignment="Left" Name="buttonTresh" Content="Find treshold"   Grid.Column="2" Margin="12,0,0,10"     VerticalAlignment="Bottom"  Width="75"  Click="buttonTresh_Click" IsEnabled="False"/>
+            <Slider x:Name="slider" Grid.Column="2" HorizontalAlignment="Left" Margin="108,0,0,43" VerticalAlignment="Bottom" Width="191" Value="30" Minimum="0" Maximum="50" TickFrequency="5" IsEnabled="False"/>
+            <Slider x:Name="sliderTresh" Grid.Column="2" HorizontalAlignment="Left" Margin="108,0,0,10" VerticalAlignment="Bottom" Width="191" Minimum="0" Maximum="100" TickFrequency="5" IsEnabled="False" />
+            <Slider IsEnabled="False" x:Name="sliderFilterLow" Grid.Column="2" HorizontalAlignment="Left" Margin="108,0,0,71" VerticalAlignment="Bottom" Width="191" Value="30" Minimum="0" Maximum="255" TickFrequency="5" RenderTransformOrigin="0.518,-2.028" Thumb.DragCompleted="sliderTresh_ValueChanged"/>
+            <Slider IsEnabled="False" x:Name="sliderFilterHigh" Grid.Column="2" HorizontalAlignment="Left" Margin="321,0,0,71" VerticalAlignment="Bottom" Width="191" Value="255" Minimum="0" Maximum="255" TickFrequency="5" RenderTransformOrigin="0.518,-2.028" Thumb.DragCompleted="sliderTresh_ValueChanged"/>
+            <Button x:Name="button2" Content="Use" Grid.Column="2" HorizontalAlignment="Left" Margin="459,0,0,13" VerticalAlignment="Bottom" Width="74" Click="button2_Click" IsEnabled="False"/>
         </Grid>
     </Grid>
 </Window>
